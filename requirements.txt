@@ -1,3 +1,4 @@
-runpod
 vllm[triton]
+runpod
+requests
 huggingface_hub

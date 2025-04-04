@@ -1,25 +1,22 @@
 import runpod
 import requests
 
-VLLM_URL = "http://localhost:8000/v1/completions"
-
 def handler(job):
     prompt = job["input"].get("prompt", "")
-    max_tokens = job["input"].get("max_tokens", 1024)
+    max_tokens = job["input"].get("max_tokens", 256)
     temperature = job["input"].get("temperature", 0.7)
 
     payload = {
-        "model": "llama3-70b",
+        "model": "mistralai/Mistral-7B-Instruct-v0.2",
         "prompt": prompt,
         "max_tokens": max_tokens,
         "temperature": temperature,
     }
 
     try:
-        resp = requests.post(VLLM_URL, json=payload, timeout=60)
-        resp.raise_for_status()
-        result = resp.json()
-        return result
+        response = requests.post("http://localhost:8000/v1/completions", json=payload, timeout=60)
+        response.raise_for_status()
+        return response.json()
     except Exception as e:
         return {"error": str(e)}
 
