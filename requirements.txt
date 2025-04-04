@@ -1,0 +1,4 @@
+runpod
+requests
+vllm[triton]
+huggingface_hub
